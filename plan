@@ -1,0 +1,24 @@
+I had forgotten all ttt strategy.
+
+Briefly, I saw that safe first moves at first are center / corners, 
+while safe responses are center (to corners) or corners (only to center!)
+
+Then, forks are the way to go, but the first player can't reliably do this 
+without setting up 2 in a row for the second player.
+
+EDGES ARE BAD INITIALLY (first move for each player).
+
+
+A blog I saw recommended playing corners as the first player, cause that gives 
+novices more bad choices. 
+I'm gonna try to play that imperfect game against the system, and see if it learns good strategy.
+
+
+That will be the start / debugging. Pitting them against each other will be only the final thing I do.
+
+After pitting them against each other / itself, I will also see what modifications I can make to prevent collapse of play.
+
+
+####
+
+The code itself should be easy: use existing functions to spit out all possible moves, list all possible 1-step futures, compare the value . . .

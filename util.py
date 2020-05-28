@@ -5,6 +5,9 @@ from copy import deepcopy
 
 # Main module full of helper functions with useful names. Main interface to numpy arrays.
 
+# For dense encodings of grids, for dictionaries
+hasher = np.array([3**8, 3**7, 3**6, 3**5, 3**4, 3**3, 3**2, 3**1, 3**0])
+
 
 ## Main functions for calculating / making moves.
  
@@ -118,35 +121,6 @@ def isvalid(grid):
     if turn(grid) == -1:
         return False
     return True
-
-def RLoutcome(grid, player):
-    """Book explicily says, draws, losses = 0, wins = 1, intermediate = 0.5 default"""
-    r = result(grid)
-    if r == player:
-        return 1
-    elif r == 0:
-        return 0.5
-    else:
-        return 0
-
-
-## Functions for working with ternary numbers / hashing for dictionaries.
-
-def ternary9(n):
-    """Gets the leading 9 ternary digits for an integer."""
-    r = []
-    for i in range(9):
-        r.append(n%3)
-        n = n/3
-    r.reverse()
-    return np.array(r)
-
-def bt(grid):
-    r = np.array([3**8, 3**7, 3**6, 3**5, 3**4, 3**3, 3**2, 3**1, 3**0])
-    return np.dot(r, grid.reshape(9))
-
-def lookup(d, grid):
-    return d[bt(grid)]
 
 
 ## Functions for printing the current grid in a convenient way
