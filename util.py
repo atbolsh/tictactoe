@@ -5,9 +5,6 @@ from copy import deepcopy
 
 # Main module full of helper functions with useful names. Main interface to numpy arrays.
 
-# For dense encodings of grids, for dictionaries
-hasher = np.array([3**8, 3**7, 3**6, 3**5, 3**4, 3**3, 3**2, 3**1, 3**0])
-
 
 ## Main functions for calculating / making moves.
  

@@ -2,6 +2,11 @@ from util import *
 
 # Helper functions for creating / working with the table (dictionary) of value assignments.
 
+
+## For dense encodings of grids, for dictionaries
+hasher = np.array([3**8, 3**7, 3**6, 3**5, 3**4, 3**3, 3**2, 3**1, 3**0])
+
+
 ## Initial RL value
 
 def RLoutcome(grid, player):
