@@ -60,14 +60,14 @@ def greedy_move(player, grid, valdict, alpha = A, verbose = False):
 
 ## Testing routine; it struggles with redefining global variables.
 
-grid = np.array([[0, 0, 0], [0, 1, 2], [0, 0, 0]])
-player = 1
-
-d1[bt(np.array([[0, 1, 0], [0, 1, 2], [0, 0, 0]]))] = 0.7
-d1[bt(np.array([[1, 0, 0], [0, 1, 2], [0, 0, 0]]))] = 0.7
-d1[bt(np.array([[0, 0, 1], [0, 1, 2], [0, 0, 0]]))] = 0.7
-
-choice = greedy_move(player, grid, d1, 0.2, verbose=True)
+#grid = np.array([[0, 0, 0], [0, 1, 2], [0, 0, 0]])
+#player = 1
+#
+#d1[bt(np.array([[0, 1, 0], [0, 1, 2], [0, 0, 0]]))] = 0.7
+#d1[bt(np.array([[1, 0, 0], [0, 1, 2], [0, 0, 0]]))] = 0.7
+#d1[bt(np.array([[0, 0, 1], [0, 1, 2], [0, 0, 0]]))] = 0.7
+#
+#choice = greedy_move(player, grid, d1, 0.2, verbose=True)
 # 
 
 def exploratory_move(player, grid, verbose=False):
@@ -79,7 +79,7 @@ def exploratory_move(player, grid, verbose=False):
     futures = [move(grid, player, box) for box in freeSpots]
     if verbose:
         print("Possible futures.\n\n")
-        for i in range(len(vals)):
+        for i in range(len(futures)):
             showGrid(futures[i])
             print("______________________\n")
     ind = np.random.choice(np.arange(len(futures)))
@@ -103,7 +103,7 @@ def agent_move(player, grid, alpha=A, probExploration=pE, verbose=False):
             valdict = d1
         else:
             valdict = d2
-        choice = greedy_choice(player, grid, valdict, alpha, verbose)
+        choice = greedy_move(player, grid, valdict, alpha, verbose)
     return choice
 
 

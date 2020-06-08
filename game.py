@@ -1,10 +1,14 @@
 from util import *
+from agent import *
 
 # grid is 3x3
 # 1 goes first
 # 0 is unoccupied, 1 and 2 are players
 # 
 # This is the main module integrating all the components
+
+
+V = True
 
 def player_handle_move(grid, player):
     print("Grid is currently:")
@@ -22,19 +26,23 @@ def player_handle_move(grid, player):
         print("Sorry, move not available, select another move.\n\n")
     return move(grid, player, box) 
 
-def computer_handle_move(grid, player):
-    print("TODO")
-    return None
+def computer_handle_move(grid, player, verbose=V):
+    print("Computer's turn.")
+    choice = agent_move(player, grid, verbose=verbose) 
+    return choice
 
 def game(mode):
-    if mode != 1:
+    if mode == 4:
         print("Not yet implemented")
         return None
     grid = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
     r = result(grid)
     while r == 0:
         player = turn(grid)
-        grid = player_handle_move(grid, player)
+        if (mode == 1) or ((mode == 2) and (player == 1)) or ((mode == 3) and (player == 2)):
+            grid = player_handle_move(grid, player)
+        else:
+            grid = computer_handle_move(grid, player)
         r = result(grid)
     print("\n\nFinal position:")
     showGrid(grid)
