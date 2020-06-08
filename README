@@ -1,0 +1,5 @@
+Very small system to play with RL.
+
+Full of spaghetti. At the end, I chose not to wrap agent into a class and just copy-pasted for the head-to-head mode 4.
+
+
