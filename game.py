@@ -31,7 +31,10 @@ def computer_handle_move(grid, player, verbose=V):
     choice = agent_move(player, grid, verbose=verbose) 
     return choice
 
-def game(mode):
+def game(mode, seed = True):
+    global lastChoice
+    if seed:
+        np.random.seed(12)
     if mode == 4:
         print("Not yet implemented")
         return None
@@ -46,6 +49,11 @@ def game(mode):
         r = result(grid)
     print("\n\nFinal position:")
     showGrid(grid)
+    if mode == 2:
+        end_of_game(2, grid, verbose=V) 
+    if mode == 3:
+        end_of_game(1, grid, verbose=V) 
+    lastChoice = -1
     if r == 1:
         print("Congrats player 1!")
         return 1

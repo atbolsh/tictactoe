@@ -106,4 +106,25 @@ def agent_move(player, grid, alpha=A, probExploration=pE, verbose=False):
         choice = greedy_move(player, grid, valdict, alpha, verbose)
     return choice
 
+def end_of_game(player, grid, alpha=A, verbose=False):
+    global d1
+    global d2
+    if player == 1:
+        valdict = d1
+    else:
+        valdict = d2
+
+    if type(lastChoice) != type(-1):
+        if verbose:
+            print("Updating valdict.\nlastChoice:\n")
+            showGrid(lastChoice)
+            print("Old value:   " + str(lookup(valdict, lastChoice)))
+        valdict[bt(lastChoice)] += alpha*(lookup(valdict, grid) - lookup(valdict, lastChoice))
+        if verbose:
+            print("New value:   " + str(lookup(valdict, lastChoice)))
+            print("_______________________\n\n")
+   
+    return None
+
+
 
