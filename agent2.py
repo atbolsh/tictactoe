@@ -1,3 +1,5 @@
+### Cheapest spaghetti option, since I didn't feel like wrapping agent.py into a real class.
+
 from util import *
 from gendictionary import *
 
@@ -7,20 +9,20 @@ from gendictionary import *
 ### Have a "lastPicked" variable, by default set to -1. 
 ### Each time we get the opponents move back, we update ths score for lastPicked.
 
-A = 0.5
+A2 = 0.5
 
-pE = 0.1
+pE2 = 0.1
 
 # Dummy initial value.
-#lastChoice = np.array([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
-lastChoice = -1
+#lastChoice2 = np.array([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
+lastChoice2 = -1
 
-d1, d2 = gen_dicts()
+d12, d22 = gen_dicts()
 
-def greedy_move(player, grid, valdict, alpha = A, verbose = False):
+def greedy_move2(player, grid, valdict, alpha = A2, verbose = False):
     if verbose:
         print("Greedy move chosen.\n\n")
-    global lastChoice
+    global lastChoice2
     ## Lookahead, compute all possible positions after a move.
     freeSpots = availableMoves(grid)
     futures = [move(grid, player, box) for box in freeSpots]
@@ -42,20 +44,20 @@ def greedy_move(player, grid, valdict, alpha = A, verbose = False):
         print(vals[ind])
         print("______________________________\n\n")
     ## Update the valdict
-    if type(lastChoice) != type(-1):
+    if type(lastChoice2) != type(-1):
         if verbose:
             print("Updating valdict.\nlastChoice:\n")
-            showGrid(lastChoice)
-            print("Old value:   " + str(lookup(valdict, lastChoice)))
-        valdict[bt(lastChoice)] += alpha*(lookup(valdict, choice) - lookup(valdict, lastChoice))
+            showGrid(lastChoice2)
+            print("Old value:   " + str(lookup(valdict, lastChoice2)))
+        valdict[bt(lastChoice2)] += alpha*(lookup(valdict, choice) - lookup(valdict, lastChoice2))
         if verbose:
-            print("New value:   " + str(lookup(valdict, lastChoice)))
+            print("New value:   " + str(lookup(valdict, lastChoice2)))
             print("_______________________\n\n")
     else:
         if verbose:
             print("No need to update valdict; lastChoice == -1.\n\n")
     ## Update lastchoice
-    lastChoice = choice
+    lastChoice2 = choice
     return choice
 
 ## Testing routine; it struggles with redefining global variables.
@@ -70,10 +72,10 @@ def greedy_move(player, grid, valdict, alpha = A, verbose = False):
 #choice = greedy_move(player, grid, d1, 0.2, verbose=True)
 # 
 
-def exploratory_move(player, grid, verbose=False):
+def exploratory_move2(player, grid, verbose=False):
     if verbose:
         print("Greedy move chosen.\n\n")
-    global lastChoice
+    global lastChoice2
     ## Lookahead, compute all possible positions after a move and pick random one.
     freeSpots = availableMoves(grid)
     futures = [move(grid, player, box) for box in freeSpots]
@@ -89,39 +91,39 @@ def exploratory_move(player, grid, verbose=False):
         showGrid(choice)
         print("______________________________\n\n")
     ## Update lastChoice and return
-    lastChoice = choice
+    lastChoice2 = choice
     return choice
 
-def agent_move(player, grid, alpha=A, probExploration=pE, verbose=False):
-    global d1
-    global d2
+def agent_move2(player, grid, alpha=A2, probExploration=pE2, verbose=False):
+    global d12
+    global d22
     r = np.random.random()
     if r < probExploration:
-        choice = exploratory_move(player, grid, verbose)
+        choice = exploratory_move2(player, grid, verbose)
     else:
         if player == 1:
-            valdict = d1
+            valdict = d12
         else:
-            valdict = d2
-        choice = greedy_move(player, grid, valdict, alpha, verbose)
+            valdict = d22
+        choice = greedy_move2(player, grid, valdict, alpha, verbose)
     return choice
 
-def end_of_game(player, grid, alpha=A, verbose=False):
-    global d1
-    global d2
+def end_of_game2(player, grid, alpha=A2, verbose=False):
+    global d12
+    global d22
     if player == 1:
-        valdict = d1
+        valdict = d12
     else:
-        valdict = d2
+        valdict = d22
 
-    if type(lastChoice) != type(-1):
+    if type(lastChoice2) != type(-1):
         if verbose:
             print("Updating valdict.\nlastChoice:\n")
-            showGrid(lastChoice)
-            print("Old value:   " + str(lookup(valdict, lastChoice)))
-        valdict[bt(lastChoice)] += alpha*(lookup(valdict, grid) - lookup(valdict, lastChoice))
+            showGrid(lastChoice2)
+            print("Old value:   " + str(lookup(valdict, lastChoice2)))
+        valdict[bt(lastChoice2)] += alpha*(lookup(valdict, grid) - lookup(valdict, lastChoice2))
         if verbose:
-            print("New value:   " + str(lookup(valdict, lastChoice)))
+            print("New value:   " + str(lookup(valdict, lastChoice2)))
             print("_______________________\n\n")
    
     return None

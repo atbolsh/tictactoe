@@ -1,5 +1,6 @@
 from util import *
 from agent import *
+from agent2 import *
 
 # grid is 3x3
 # 1 goes first
@@ -31,21 +32,31 @@ def computer_handle_move(grid, player, verbose=V):
     choice = agent_move(player, grid, verbose=verbose) 
     return choice
 
-def game(mode, seed = True):
+def computer_handle_move2(grid, player, verbose=V):
+    print("Computer's turn.")
+    choice = agent_move2(player, grid, verbose=verbose) 
+    return choice
+
+def game(mode, seed = False):
     global lastChoice
+    trajectory = []
     if seed:
         np.random.seed(12)
-    if mode == 4:
-        print("Not yet implemented")
-        return None
+#    if mode == 4:
+#        print("Not yet implemented")
+#        return None
     grid = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+    trajectory.append(deepcopy(grid))
     r = result(grid)
     while r == 0:
         player = turn(grid)
         if (mode == 1) or ((mode == 2) and (player == 1)) or ((mode == 3) and (player == 2)):
             grid = player_handle_move(grid, player)
-        else:
+        elif (mode < 4) or ((mode == 4) and (player == 1)):
             grid = computer_handle_move(grid, player)
+        else:
+            grid = computer_handle_move2(grid, player)
+        trajectory.append(deepcopy(grid))
         r = result(grid)
     print("\n\nFinal position:")
     showGrid(grid)
@@ -53,22 +64,25 @@ def game(mode, seed = True):
         end_of_game(2, grid, verbose=V) 
     if mode == 3:
         end_of_game(1, grid, verbose=V) 
+    if mode == 4:
+        end_of_game(1, grid, verbose=V) 
+        end_of_game2(2, grid, verbose=V) 
     lastChoice = -1
     if r == 1:
         print("Congrats player 1!")
-        return 1
+        return 1, trajectory
     if r == 2:
         print("Congrats player 2!")
-        return 2
+        return 2, trajectory
     if r == 3:
         print("Tie. Good game.")
-        return 3
+        return 3, trajectory
     if r == 0 or r == -1:
         print("Eror upstream.")
-        return -1
+        return -1, None
     else:
         print("Error.")
-        return None
+        return None, None
 
 if __name__ == '__main__':
     while True:

@@ -14,7 +14,7 @@ def RLoutcome(grid, player):
     r = result(grid)
     if r == player:
         return 1
-    elif r == 0:
+    elif r == 0: # or r == 3:
         return 0.5
     else:
         return 0
